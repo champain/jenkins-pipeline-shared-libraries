@@ -12,9 +12,7 @@ class PipelineUtils {
      * @param List emailList List of email addresses
      */
 
-    static void emailPipelineNotify(currentBuild, 
-                                    List emailList = ["foo@bar"]) 
-    { 
+    static void email(currentBuild, List emailList) { 
         def curBuild = currentBuild.currentResult
         def prevBuild = currentBuild.getPreviousBuild()?.getResult() ?: null
         def buildStatusChanged = ( 
@@ -22,7 +20,7 @@ class PipelineUtils {
         )
         def sendEmail = (curBuild in [Result.FAILURE, Result.UNSTABLE ]) || buildStatusChanged 
 
-        if (sendEmail) {
+        if (sendEmail && emailList) {
             emailext (
                 recipientProviders: [[$class: "RequesterRecipientProvider"]],
                 to: emailList().join(", "),

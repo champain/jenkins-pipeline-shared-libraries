@@ -20,7 +20,7 @@ def emailScript = {
     if (sendEmail) {
         emailext (
             recipientProviders: [[$class: "RequesterRecipientProvider"]],
-            to: "jacob.castello@cfpb.gov",
+            to: "foo@bar",
             subject: "\$DEFAULT_SUBJECT",
             body: "\$DEFAULT_BODY"
         )

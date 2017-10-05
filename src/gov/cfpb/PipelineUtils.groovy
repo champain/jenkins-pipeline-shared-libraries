@@ -12,13 +12,11 @@ class PipelineUtils {
      * @param List emailList List of email addresses
      */
 
-    static void email(currentBuild, List emailList) { 
+    static void email(currentBuild, List emailList) {
         def curBuild = currentBuild.currentResult
         def prevBuild = currentBuild.getPreviousBuild()?.getResult() ?: null
-        def buildStatusChanged = ( 
-            curBuild == Result.SUCCESS && prevBuild != curBuild && prevBuild
-        )
-        def sendEmail = (curBuild in [Result.FAILURE, Result.UNSTABLE ]) || buildStatusChanged 
+        def buildFixed = curBuild == Result.SUCCESS && prevBuild != curBuild && prevBuild
+        def sendEmail = (curBuild in [Result.FAILURE, Result.UNSTABLE]) || buildFixed
 
         if (sendEmail && emailList) {
             emailext (
@@ -29,5 +27,8 @@ class PipelineUtils {
             )
         }
     }
-}
 
+    static void foo() {
+        println('foo')
+    }
+}

@@ -26,7 +26,7 @@ class PipelineUtils {
         if (sendEmail && emailList) {
             return emailext (
                 recipientProviders: [[$class: "RequesterRecipientProvider"]],
-                to: emailList().join(", "),
+                to: emailList.join(", "),
                 subject: 'test subject', // subject: "\$DEFAULT_SUBJECT",
                 body: 'test body' //body: "\$DEFAULT_BODY"
             )

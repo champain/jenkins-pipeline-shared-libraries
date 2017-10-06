@@ -3,11 +3,6 @@ package gov.cfpb
 import hudson.model.Result
 
 
-def foo() {
-    println('foo')
-}
-
-
 
 /**
  * Pipeline utils class to house reusable Pipeline code
@@ -34,5 +29,11 @@ class PipelineUtils {
             )
         }
     }
+
+
+    def foo() {
+        println('foooooooooo')
+    }
+
 
 }

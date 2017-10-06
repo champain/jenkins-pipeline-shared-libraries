@@ -3,8 +3,8 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
 def call(RunWrapper currentBuild, List<String> emailList) {
-    def currentResult = currentBuild.currentResult
-    def previousResult = currentBuild.getPreviousBuild()?.getResult()
+    def currentResult = currentBuild.currentResult.toString()
+    def previousResult = currentBuild.getPreviousBuild()?.getResult().toString()
 
     def buildFixed = (
         (currentResult == Result.SUCCESS) &&

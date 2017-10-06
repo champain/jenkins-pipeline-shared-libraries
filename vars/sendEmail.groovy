@@ -27,6 +27,7 @@ def call(RunWrapper currentBuild, List<String> emailList) {
             recipientProviders: [[$class: "RequesterRecipientProvider"]],
             to: emailList.join(", "),
             subject: "\$DEFAULT_SUBJECT",
+            body: "\$DEFAULT_CONTENT"
         )
     }
 }

@@ -5,17 +5,17 @@ def call(RunWrapper currentBuild, List<String> emailList) {
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
 
-//    def buildFixed = ( 
-//        currentResult.isBetterOrEqualTo(Result.SUCCESS) &&
-//        previousResult?.isWorseThan(Result.SUCCESS)
-//    )
+    def buildFixed = ( 
+        currentResult.isBetterOrEqualTo(Result.SUCCESS) &&
+        previousResult?.isWorseThan(Result.SUCCESS)
+    )
 //
 //    def badResult = (
 //        currentResult.isWorseThan(Result.SUCCESS) &&
 //        currentResult.isBetterThan(Result.NOT_BUILT)
 //    )
+
     def badResult = true
-    def buildFixed = true
     println("currentResult: ${currentResult}")
     println("previousResult: ${previousResult}")
     println("badResult: ${badResult}")

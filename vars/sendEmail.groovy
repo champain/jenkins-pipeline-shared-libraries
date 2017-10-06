@@ -18,6 +18,7 @@ def call(RunWrapper currentBuild, List<String> emailList) {
     println("previousResult: ${previousResult}")
     println("badResult: ${badResult}")
     println("buildFixed: ${buildFixed}")
+    println("constants: failure - ${Result.FAILURE} - unstable ${Result.UNSTABLE}")
 
     if (buildFixed || badResult) {
         emailext (

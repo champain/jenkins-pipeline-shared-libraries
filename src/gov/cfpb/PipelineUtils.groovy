@@ -22,7 +22,7 @@ class PipelineUtils {
         def buildFixed = curBuild == Result.SUCCESS && prevBuild != curBuild && prevBuild != null
         def sendEmail = (curBuild in [Result.FAILURE, Result.UNSTABLE]) || buildFixed
         """
-        def sendMail = true
+        def sendEmail = true
         if (sendEmail && emailList) {
             return emailext (
                 recipientProviders: [[$class: "RequesterRecipientProvider"]],

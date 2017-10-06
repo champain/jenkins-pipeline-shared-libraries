@@ -1,4 +1,4 @@
-def sendEmail(currentBuild, List emailList) {
+def call(currentBuild, List emailList) {
     """
     def curBuild = currentBuild.currentResult
     def prevBuild = currentBuild.getPreviousBuild()?.getResult() ?: null

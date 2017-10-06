@@ -1,14 +1,17 @@
 import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
-def call(RunWrapper currentBuild, List<String> emailList) {
-    // We are using Result.toString() instead of doing a less-stringly-typed
-    // approach with Result.fromString() (combined with the Result comparison
-    // methods) because Result.fromString() is not available when pipeline
-    // jobs are sandboxed. We'd like for this shared library to be usable even
-    // in sandboxed mode. For more info, see:
-    // https://wiki.jenkins.io/display/JENKINS/Script+Security+Plugin/#ScriptSecurityPlugin-User%E2%80%99sguide
+// TODO add some explanation of why this exists
 
+// We are using Result.toString() instead of doing a less-stringly-typed
+// approach with Result.fromString() (combined with the Result comparison
+// methods) because Result.fromString() is not available when pipeline
+// jobs are sandboxed. We'd like for this shared library to be usable even
+// in sandboxed mode. For more info, see:
+// https://wiki.jenkins.io/display/JENKINS/Script+Security+Plugin/#ScriptSecurityPlugin-User%E2%80%99sguide
+
+
+def call(RunWrapper currentBuild, List<String> emailList) {
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
 

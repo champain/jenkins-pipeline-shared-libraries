@@ -1,7 +1,7 @@
 package gov.cfpb
 
 import hudson.model.Result
-
+import java.io.File
 
 
 /**
@@ -11,29 +11,26 @@ class PipelineUtils {
 
     /** Utility function to add extended email
      *
+     * @param currentBuild TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
      * @param List emailList List of email addresses
      */
 
     static void email(currentBuild, List emailList) {
+        """
         def curBuild = currentBuild.currentResult
         def prevBuild = currentBuild.getPreviousBuild()?.getResult() ?: null
-        def buildFixed = curBuild == Result.SUCCESS && prevBuild != curBuild && prevBuild
+        def buildFixed = curBuild == Result.SUCCESS && prevBuild != curBuild && prevBuild != null
         def sendEmail = (curBuild in [Result.FAILURE, Result.UNSTABLE]) || buildFixed
-
+        """
+        def sendMail = true
         if (sendEmail && emailList) {
-            emailext (
+            return emailext (
                 recipientProviders: [[$class: "RequesterRecipientProvider"]],
                 to: emailList().join(", "),
-                subject: "\$DEFAULT_SUBJECT",
-                body: "\$DEFAULT_BODY"
+                subject: 'test subject', // subject: "\$DEFAULT_SUBJECT",
+                body: 'test body' //body: "\$DEFAULT_BODY"
             )
         }
     }
-
-
-    def foo() {
-        println('foooooooooo')
-    }
-
 
 }

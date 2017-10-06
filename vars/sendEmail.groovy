@@ -12,9 +12,8 @@ def call(RunWrapper currentBuild, List<String> emailList) {
 
     def badResult = (
         currentResult.isWorseThan(Result.SUCCESS) &&
-        currentResult.isBetterThan(Result.NOT_BUILT
+        currentResult.isBetterThan(Result.NOT_BUILT)
     )
-
 
     println("currentResult: ${currentResult}")
     println("previousResult: ${previousResult}")

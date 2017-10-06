@@ -3,7 +3,6 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
 def call(RunWrapper currentBuild, List<String> emailList) {
-    println('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx')
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
 
@@ -14,6 +13,11 @@ def call(RunWrapper currentBuild, List<String> emailList) {
     )
 
     def badResult = currentResult in [Result.FAILURE, Result.UNSTABLE]
+
+    println("currentResult: ${currentResult}")
+    println("previousResult: ${previousResult}")
+    println("badResult: ${badResult}")
+    println("buildFixed: ${buildFixed}")
 
     if (buildFixed || badResult) {
         emailext (

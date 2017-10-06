@@ -2,20 +2,20 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
 def call(RunWrapper currentBuild, List<String> emailList) {
-    def currentResult = currentBuild.currentResult
-    def previousResult = currentBuild.getPreviousBuild()?.getResult()
+    def currentResult = Result.fromString(currentBuild.currentResult)
+    def previousResult = Result.fromString(currentBuild.getPreviousBuild()?.getResult())
+
 
     def buildFixed = ( 
-        currentResult.isBetterOrEqualTo(Result.SUCCESS())
-        //previousResult.isWorseThan(Result.SUCCESS)
+        currentResult.isBetterOrEqualTo(Result.SUCCESS) &&
+        previousResult.isWorseThan(Result.SUCCESS)
     )
-//
-//    def badResult = (
-//        currentResult.isWorseThan(Result.SUCCESS) &&
-//        currentResult.isBetterThan(Result.NOT_BUILT)
-//    )
 
-    def badResult = true
+    def badResult = (
+        currentResult.isWorseThan(Result.SUCCESS) &&
+        currentResult.isBetterThan(Result.NOT_BUILT)
+    )
+
     println("currentResult: ${currentResult}")
     println("previousResult: ${previousResult}")
     println("badResult: ${badResult}")
@@ -31,3 +31,4 @@ def call(RunWrapper currentBuild, List<String> emailList) {
         )
     }
 }
+

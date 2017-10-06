@@ -2,8 +2,18 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
 def call(RunWrapper currentBuild, List<String> emailList) {
+
+    // We are using Result.toString() instead of doing a less-stringly-typed
+    // approach with Result.fromString() and then the Result comparison
+    // methods because Result.fromString() is not available when pipeline
+    // jobs are sandboxed. We'd like for this shared library to be usable
+    // even in sandboxed mode.
+
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
+
+    println('xxxxxxxxxxxxxxx')
+    println(previousResult)
 
     def buildFixed = (
         (currentResult == Result.SUCCESS.toString()) &&
@@ -15,18 +25,12 @@ def call(RunWrapper currentBuild, List<String> emailList) {
         currentResult in [Result.UNSTABLE.toString(), Result.FAILURE.toString()]
     )
 
-    println("currentResult: ${currentResult}")
-    println("previousResult: ${previousResult}")
-    println("badResult: ${badResult}")
-    println("buildFixed: ${buildFixed}")
-    println("constants: failure - ${Result.FAILURE} - unstable ${Result.UNSTABLE}")
-
     if (buildFixed || badResult) {
         emailext (
             recipientProviders: [[$class: "RequesterRecipientProvider"]],
             to: emailList.join(", "),
-            subject: 'test subject', // subject: "\$DEFAULT_SUBJECT",
-            body: 'test body' //body: "\$DEFAULT_BODY"
+            subject: "\$DEFAULT_SUBJECT",
+            body: "\$DEFAULT_BODY"
         )
     }
 }

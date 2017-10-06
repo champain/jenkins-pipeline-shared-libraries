@@ -3,6 +3,7 @@ import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
 def call(RunWrapper currentBuild, List<String> emailList) {
+    println('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxx')
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
 

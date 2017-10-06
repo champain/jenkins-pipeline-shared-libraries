@@ -1,4 +1,3 @@
-//import hudson.model.Result
 import org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper
 
 
@@ -6,13 +5,15 @@ def call(RunWrapper currentBuild, List<String> emailList) {
     def currentResult = currentBuild.currentResult
     def previousResult = currentBuild.getPreviousBuild()?.getResult()
 
-    def buildFixed = (
-        (currentResult == Result.SUCCESS) &&
-        (currentResult != previousResult) &&
-        (previousResult != null)
+    def buildFixed = ( 
+        currentResult.isBetterOrEqualTo(Result.SUCCESS) &&
+        previousResult?.isWorseThan(Result.SUCCESS)
     )
 
-    def badResult = currentResult.isWorseThan(Result.SUCCESS) // XXXXXXXXXXXXXXX
+    def badResult = (
+        currentResult.isWorseThan(Result.SUCCESS) &&
+        currentResult.isBetterThan(Result.NOT_BUILT
+    )
 
 
     println("currentResult: ${currentResult}")
